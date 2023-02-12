@@ -2,14 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types'
 
 const Stores = (props) => {
-    const id = props.id; 
     const address = props.address;
     const city = props.city;
     const state = props.state;
     const county = props.county;
     const description = props.description;
-    const latitude = props.latitude;
-    const longitude = props.longitude;
     const name = props.name;
     const website = props.website;
     const zip_code = props.zip_code;
@@ -20,20 +17,21 @@ const Stores = (props) => {
     
     return (
         <div>
-        address : {address};
-        city : {city};
-        county : {county};
-        state : {state}
-        description : {description};
-        latitude : {latitude};
-        longitude : {longitude};
-        name : {name};
-        state : {state};
-        website : {website};
-        zip_code : {zip_code};
-        store_type : {store_type};
-        phone : {phone};
-        email : {email};
+            <ul>
+                <li>Store type : {store_type}</li>
+                <li> Store name : {name}</li>
+                <li>Description : {description}</li>
+                <li>📞 : {phone}</li>
+                <li>📧  : {email}</li>
+                <li>Website : {website};</li>
+                <ul>
+                    <li>Address : {address}</li>
+                    <li>City : {city}</li>
+                    <li>County : {county}</li>
+                    <li>State : {state}</li>
+                    <li>zip_code : {zip_code}</li>
+                </ul>
+            </ul>
     </div>
     )
 }

@@ -3,12 +3,15 @@ import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import './App.css';
 import { Icon } from "leaflet"
+
 import RestaurantsList from "./components/RestaurantsList";
-import AddRestaurantForm from "./components/NewEntryForm";
 import ServicesList from "./components/ServicesList";
 import SitesList from "./components/SitesList";
 import StoresList from "./components/StoresList";
-
+import AddRestaurantForm from "./components/NewRestaurantForm";
+import AddServiceForm from "./components/NewServiceForm";
+import AddStoreForm from "./components/NewStoreForm";
+import AddSiteForm from "./components/NewSiteForm";
 
 // free icons Flaticon: https://www.flaticon.com/
 // Font Awesome: https://fontawesome.com/
@@ -67,6 +70,16 @@ function App() {
 
   const addRestaurant = (newRestaurant) => {
     setRestaurantsList([...restaurantsList, newRestaurant]);
+  }
+  const addService = (newService) => {
+    setServiceList([...servicesList,newService]);
+  }
+  const addStore = (newStore) => {
+    setStoresList([...storesList,newStore])
+  }
+
+  const addSite = (newSite) => {
+    setSitesList([...sitesList,newSite])
   }
 
   const fetchAllRestaurants = () => {
@@ -216,25 +229,34 @@ function App() {
       <div>
         <div>
         <AddRestaurantForm addRestaurant={addRestaurant} />
+        <AddServiceForm addService = {addService}/>
+        <AddStoreForm addStore = {addStore} />
+        <AddSiteForm addSite = {addSite} />
         </div>
+        <h2>All Restaurant</h2>
         <RestaurantsList 
         addRestaurant={addRestaurant}
         restaurantEntries={restaurantsList} />
       </div> 
       <div>
+      <h2>All Services</h2>
       <ServicesList
         servicesEntries = {servicesList} />
       </div>
       <div>
+      <h2>All Sites</h2>
       <SitesList
         sitesEntries = {sitesList} />
       </div>
       <div>
+      <h2>All Stores</h2>
       <StoresList
         storesEntries = {storesList} />
       </div>
     </div>
   );
 }
+
+
 
 export default App;

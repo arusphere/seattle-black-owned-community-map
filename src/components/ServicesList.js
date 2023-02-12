@@ -4,6 +4,7 @@ import Services from "./Services";
 
 const ServicesList = (props) => {
     const servicesComponents = props.servicesEntries.map((serviceEntry) =>{
+        
         return (
             <li key ={serviceEntry.id}>
                 <Services
