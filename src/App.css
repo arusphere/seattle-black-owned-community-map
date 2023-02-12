@@ -2,3 +2,103 @@
   width: 75%;
   height: 75vh;
 }
+
+.service-icon {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-left: -115px;
+  
+  border-radius: 50% 50% 50% 0;
+  background-color:yellowgreen;
+  width: 20px;
+  height: 20px;
+  transform: rotate(-45deg);
+}
+
+.service-icon::after {
+  position: absolute;
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -5px;
+}
+
+.restaurant-icon {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-left: -115px;
+  
+  border-radius: 50% 50% 50% 0;
+  background-color:rebeccapurple;
+  width: 20px;
+  height: 20px;
+  transform: rotate(-45deg);
+}
+
+.restaurant-icon::after {
+  position: absolute;
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -5px;
+}
+
+.stores-icon {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-left: -115px;
+  
+  border-radius: 50% 50% 50% 0;
+  background-color:darkcyan;
+  width: 20px;
+  height: 20px;
+  transform: rotate(-45deg);
+}
+
+.stores-icon::after {
+  position: absolute;
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -5px;
+}
+
+.historicalsite-icon {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  margin-left: -115px;
+  
+  border-radius: 50% 50% 50% 0;
+  background-color:darkgreen;
+  width: 20px;
+  height: 20px;
+  transform: rotate(-45deg);
+}
+
+.stores-icon::after {
+  position: absolute;
+  content: '';
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  margin-left: -5px;
+  margin-top: -5px;
+}

@@ -10,8 +10,6 @@ import SitesList from "./components/SitesList";
 import StoresList from "./components/StoresList";
 
 
-
-
 // free icons Flaticon: https://www.flaticon.com/
 // Font Awesome: https://fontawesome.com/
 // IcoMoon: https://icomoon.io/
@@ -19,12 +17,37 @@ import StoresList from "./components/StoresList";
 // Material Design Icons: https://material.io/resources/icons/
 // Devicon: http://devicon.fr/
 
+const serviceIcon = new Icon({
+  iconUrl: "/serviceicon.png",
+  iconSize: [25, 25],
+  iconAnchor: [12, 12],
+  popupAnchor: [0, -12],
+  className: "service-icon"
+});
 
 
+const restaurantIcon = new Icon({
+  iconUrl: "/restaurantsicon.png",
+  iconSize: [25, 25],
+  iconAnchor: [12, 12],
+  popupAnchor: [0, -12],
+  className: "restaurant-icon"
+});
 
-const skater = new Icon ({
-  iconUrl:"/skateboarding.svg",
-  iconSize:[25,25]
+const storesIcon = new Icon({
+  iconUrl: "/storesicon.png",
+  iconSize: [25, 25],
+  iconAnchor: [12, 12],
+  popupAnchor: [0, -12],
+  className: "stores-icon"
+});
+
+const historicalsitesIcon = new Icon({
+  iconUrl: "/historicalsites.png",
+  iconSize: [25, 25],
+  iconAnchor: [12, 12],
+  popupAnchor: [0, -12],
+  className: "historicalsite-icon"
 });
 
 
@@ -114,6 +137,7 @@ function App() {
         <Marker
           key={restaurant.id}
           position={[restaurant.latitude, restaurant.longitude]}
+          icon={restaurantIcon }
         >
           <Popup>
             <h2>{restaurant.name}</h2>
@@ -135,6 +159,7 @@ function App() {
         <Marker
           key={service.id}
           position={[service.latitude, service.longitude]}
+          icon={serviceIcon}
         >
           <Popup >
             <h2>{service.name}</h2>
@@ -154,7 +179,7 @@ function App() {
         <Marker
           key={site.id}
           position={[site.latitude, site.longitude]}
-          icon = {skater}
+          icon = {historicalsitesIcon}
         >
           <Popup>
             <h2>{site.name}</h2>
@@ -174,6 +199,7 @@ function App() {
         <Marker
           key={store.id}
           position={[store.latitude, store.longitude]}
+          icon = {storesIcon}
           
         >
           <Popup>
