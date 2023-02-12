@@ -29,7 +29,6 @@ function AddRestaurantForm(props) {
         setPhone("");
         setWebsite("");
     };
-
     return (
         <form onSubmit={handleSubmit}>
         <input

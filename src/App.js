@@ -13,12 +13,7 @@ import AddServiceForm from "./components/NewServiceForm";
 import AddStoreForm from "./components/NewStoreForm";
 import AddSiteForm from "./components/NewSiteForm";
 
-// free icons Flaticon: https://www.flaticon.com/
-// Font Awesome: https://fontawesome.com/
-// IcoMoon: https://icomoon.io/
-// The Noun Project: https://thenounproject.com/
-// Material Design Icons: https://material.io/resources/icons/
-// Devicon: http://devicon.fr/
+
 
 const serviceIcon = new Icon({
   iconUrl: "/serviceicon.png",
@@ -56,18 +51,22 @@ const historicalsitesIcon = new Icon({
 
 
 function App() {
+  const [flagCounts, setFlagCounts] = useState({});
+  // const [selectedItem, setSelectedItem] = useState(null);
+
   const [restaurantsList, setRestaurantsList] = useState([]);
   const URL = "https://sblackownedproxy.herokuapp.com/restaurants";
   
   const [servicesList, setServiceList] = useState([]);
-  const URL2 = "https://sblackownedproxy.herokuapp.com/blackownedservices"
+  const URL2 = "https://sblackownedproxy.herokuapp.com/blackownedservices";
 
   const [sitesList,setSitesList] = useState([]);
-  const URL3 = "https://sblackownedproxy.herokuapp.com/historicalsites"
+  const URL3 = "https://sblackownedproxy.herokuapp.com/historicalsites";
 
   const [storesList,setStoresList] = useState([]);
-  const URL4 = "https://sblackownedproxy.herokuapp.com/blackownedstores"
+  const URL4 = "https://sblackownedproxy.herokuapp.com/blackownedstores";
 
+  
   const addRestaurant = (newRestaurant) => {
     setRestaurantsList([...restaurantsList, newRestaurant]);
   }
@@ -91,6 +90,10 @@ function App() {
       .catch(error => {
         console.log(error);
       });
+  };
+  useEffect(fetchAllRestaurants, []);
+  const handleFlag = (id) => {
+    setFlagCounts({ ...flagCounts, [id]: flagCounts[id] ? flagCounts[id] + 1 : 1 });
   };
 
   const fetchAllServices = () => {
@@ -151,10 +154,13 @@ function App() {
           key={restaurant.id}
           position={[restaurant.latitude, restaurant.longitude]}
           icon={restaurantIcon }
+          
         >
           <Popup>
             <h2>{restaurant.name}</h2>
             <p>{restaurant.email}</p>
+            <button onClick={() => handleFlag(restaurant.id)}>Flag</button>
+            <p>Flag count: {flagCounts[restaurant.id] || 0}</p>
           </Popup>
 
         </Marker>
