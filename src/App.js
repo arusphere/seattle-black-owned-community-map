@@ -5,6 +5,11 @@ import './App.css';
 import { Icon } from "leaflet"
 import RestaurantsList from "./components/RestaurantsList";
 import AddRestaurantForm from "./components/NewEntryForm";
+import ServicesList from "./components/ServicesList";
+import SitesList from "./components/SitesList";
+import StoresList from "./components/StoresList";
+
+
 
 
 // free icons Flaticon: https://www.flaticon.com/
@@ -22,60 +27,21 @@ const skater = new Icon ({
   iconSize:[25,25]
 });
 
-// const INITIAL_RESTAURANT = [
-//   {
-//       "address": "16743 Aurora Ave N Shoreline, WA",
-//       "city": "Shorline",
-//       "county": "King",
-//       "cuisine_shop_type": "Coffee Shop",
-//       "description": null,
-//       "email": "16743 Aurora Ave N Shoreline, WA",
-//       "id": 1,
-//       "latitude": "47.61312",
-//       "longitude": "-122.30164",
-//       "name": "Black Coffee NW",
-//       "phone_number": null,
-//       "state": "WA",
-//       "website": "http://www.blackcoffeenw.com/",
-//       "zip_code": "98133"
-//   },
-//   {
-//       "address": "2350 E. Union St. Seattle, WA 98122",
-//       "city": "Seattle",
-//       "county": "King",
-//       "cuisine_shop_type": "Soul Food",
-//       "description": null,
-//       "email": "goodday@communionseattle.com",
-//       "id": 2,
-//       "latitude": "47.60815",
-//       "longitude": "-122.29647",
-//       "name": "Communion Restaurant & Bar ",
-//       "phone_number": "206.391.8140",
-//       "state": "WA",
-//       "website": "communionseattle.com",
-//       "zip_code": "98122"
-//   },
-//   {
-//       "address": "2726 E. Cherry St. Seattle, WA 98122",
-//       "city": "Seattle",
-//       "county": "King",
-//       "cuisine_shop_type": "Soul Food",
-//       "description": null,
-//       "email": null,
-//       "id": 3,
-//       "latitude": "47.57952",
-//       "longitude": "-122.31214",
-//       "name": "Fat's Chicken & Waffles",
-//       "phone_number": "206.602.6863",
-//       "state": "WA",
-//       "website": "fatschickenandwaffles.com",
-//       "zip_code": "98122"
-//   }];
+
 
 function App() {
   const [restaurantsList, setRestaurantsList] = useState([]);
   const URL = "https://sblackownedproxy.herokuapp.com/restaurants";
   
+  const [servicesList, setServiceList] = useState([]);
+  const URL2 = "https://sblackownedproxy.herokuapp.com/blackownedservices"
+
+  const [sitesList,setSitesList] = useState([]);
+  const URL3 = "https://sblackownedproxy.herokuapp.com/historicalsites"
+
+  const [storesList,setStoresList] = useState([]);
+  const URL4 = "https://sblackownedproxy.herokuapp.com/blackownedstores"
+
   const addRestaurant = (newRestaurant) => {
     setRestaurantsList([...restaurantsList, newRestaurant]);
   }
@@ -91,7 +57,44 @@ function App() {
       });
   };
 
+  const fetchAllServices = () => {
+    axios
+      .get(URL2)
+      .then(res => {
+        setServiceList(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const fetchAllSites = () => {
+    axios
+      .get(URL3)
+      .then(res => {
+        setSitesList(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const fetchAllStores = () => {
+    axios
+      .get(URL4)
+      .then(res => {
+        setStoresList(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+
   useEffect(fetchAllRestaurants, []);
+  useEffect(fetchAllServices, []);
+  useEffect(fetchAllSites, []);
+  useEffect(fetchAllStores,[]);
 
   return (
     <div>
@@ -101,6 +104,8 @@ function App() {
             url="https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"
             attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
           />
+
+          {/* RESTAURANTS */}
           {restaurantsList.map(restaurant => {
   if (!restaurant.latitude || !restaurant.longitude) {
     return null;
@@ -109,13 +114,75 @@ function App() {
         <Marker
           key={restaurant.id}
           position={[restaurant.latitude, restaurant.longitude]}
-          icon={skater}
         >
           <Popup>
             <h2>{restaurant.name}</h2>
             <p>{restaurant.email}</p>
           </Popup>
+
         </Marker>
+  
+      );
+      })}
+
+      {/* SERVICES */}
+
+      {servicesList.map(service => {
+  if (!service.latitude || !service.longitude) {
+    return null;
+  }
+    return (
+        <Marker
+          key={service.id}
+          position={[service.latitude, service.longitude]}
+        >
+          <Popup >
+            <h2>{service.name}</h2>
+            <p>{service.email}</p>
+          </Popup>
+        </Marker>
+  
+      );
+      })}
+
+      {/* SITES */}
+      {sitesList.map(site => {
+  if (!site.latitude || !site.longitude) {
+    return null;
+  }
+    return (
+        <Marker
+          key={site.id}
+          position={[site.latitude, site.longitude]}
+          icon = {skater}
+        >
+          <Popup>
+            <h2>{site.name}</h2>
+            <p>{site.email}</p>
+            <p>{site.description}</p>
+          </Popup>
+        </Marker>
+  
+      );
+      })}
+       {/* STORES */}
+      {storesList.map(store => {
+  if (!store.latitude || !store.longitude) {
+    return null;
+  }
+    return (
+        <Marker
+          key={store.id}
+          position={[store.latitude, store.longitude]}
+          
+        >
+          <Popup>
+            <h2>{store.name}</h2>
+            <p>{store.email}</p>
+          </Popup>
+
+        </Marker>
+  
       );
       })}
         </MapContainer>
@@ -127,7 +194,18 @@ function App() {
         <RestaurantsList 
         addRestaurant={addRestaurant}
         restaurantEntries={restaurantsList} />
-
+      </div> 
+      <div>
+      <ServicesList
+        servicesEntries = {servicesList} />
+      </div>
+      <div>
+      <SitesList
+        sitesEntries = {sitesList} />
+      </div>
+      <div>
+      <StoresList
+        storesEntries = {storesList} />
       </div>
     </div>
   );

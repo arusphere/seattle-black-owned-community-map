@@ -19,7 +19,6 @@ const Restaurant = (props) => {
 
     return (
         <div>
-            restaurant_id : {id};
             address : {address};
             city : {city};
             county : {county};
