@@ -9,6 +9,7 @@ function AddRestaurantForm(props) {
     const [phone, setPhone] = useState("");
     const [website, setWebsite] = useState("");
 
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const newRestaurant = {

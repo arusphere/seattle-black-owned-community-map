@@ -12,6 +12,7 @@ import AddRestaurantForm from "./components/NewRestaurantForm";
 import AddServiceForm from "./components/NewServiceForm";
 import AddStoreForm from "./components/NewStoreForm";
 import AddSiteForm from "./components/NewSiteForm";
+import EditRestaurantForm from "./components/EditRestaurantForm";
 
 
 
@@ -51,8 +52,47 @@ const historicalsitesIcon = new Icon({
 
 
 function App() {
+  const [formOpen, setFormOpen] = useState(null);
+
+  const toggleForm = (formType) => {
+    setFormOpen(formType);
+  };
+
+  const fetchData = (url, setData) => {
+    axios
+      .get(url)
+      .then(res => {
+        setData(res.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  };
+
+  const LocationURL = "https://sblackownedproxy.herokuapp.com/locations";
+
+  const fetchLocation = () => {
+    axios
+      .get(LocationURL)
+      .then(response => {
+        // Handle successful response
+        console.log(response.data);
+      })
+      .catch(error => {
+        // Handle error
+        console.error(error);
+      });
+  };
+
+
+
+
+
+
+
+
+
   const [flagCounts, setFlagCounts] = useState({});
-  // const [selectedItem, setSelectedItem] = useState(null);
 
   const [restaurantsList, setRestaurantsList] = useState([]);
   const URL = "https://sblackownedproxy.herokuapp.com/restaurants";
@@ -66,74 +106,45 @@ function App() {
   const [storesList,setStoresList] = useState([]);
   const URL4 = "https://sblackownedproxy.herokuapp.com/blackownedstores";
 
+
   
   const addRestaurant = (newRestaurant) => {
     setRestaurantsList([...restaurantsList, newRestaurant]);
-  }
+  };
   const addService = (newService) => {
     setServiceList([...servicesList,newService]);
-  }
+  };
   const addStore = (newStore) => {
     setStoresList([...storesList,newStore])
-  }
-
+  };
   const addSite = (newSite) => {
     setSitesList([...sitesList,newSite])
-  }
-
-  const fetchAllRestaurants = () => {
-    axios
-      .get(URL)
-      .then(res => {
-        setRestaurantsList(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-  useEffect(fetchAllRestaurants, []);
-  const handleFlag = (id) => {
-    setFlagCounts({ ...flagCounts, [id]: flagCounts[id] ? flagCounts[id] + 1 : 1 });
-  };
-
-  const fetchAllServices = () => {
-    axios
-      .get(URL2)
-      .then(res => {
-        setServiceList(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  const fetchAllSites = () => {
-    axios
-      .get(URL3)
-      .then(res => {
-        setSitesList(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
-
-  const fetchAllStores = () => {
-    axios
-      .get(URL4)
-      .then(res => {
-        setStoresList(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
   };
 
 
-  useEffect(fetchAllRestaurants, []);
-  useEffect(fetchAllServices, []);
-  useEffect(fetchAllSites, []);
-  useEffect(fetchAllStores,[]);
+  useEffect(() => {
+    fetchData(URL, setRestaurantsList);
+  }, []);
+  
+  useEffect(() => {
+    fetchData(URL2, setServiceList);
+  }, []);
+  
+  useEffect(() => {
+    fetchData(URL3, setSitesList);
+  }, []);
+  
+  useEffect(() => {
+    fetchData(URL4, setStoresList);
+  }, []);
+
+  const handleFlag = (id, increase) => {
+    if (increase) {
+      setFlagCounts({ ...flagCounts, [id]: (flagCounts[id] || 0) + 1 });
+    } else {
+      setFlagCounts({ ...flagCounts, [id]: (flagCounts[id] || 0) - 1 });
+    }
+  };
 
   return (
     <div>
@@ -159,10 +170,10 @@ function App() {
           <Popup>
             <h2>{restaurant.name}</h2>
             <p>{restaurant.email}</p>
-            <button onClick={() => handleFlag(restaurant.id)}>Flag</button>
+            <button onClick={() => handleFlag(restaurant.id, true)}>Flag up</button>
+            <button onClick={() => handleFlag(restaurant.id, false)}>Flag down</button>
             <p>Flag count: {flagCounts[restaurant.id] || 0}</p>
           </Popup>
-
         </Marker>
   
       );
@@ -183,6 +194,9 @@ function App() {
           <Popup >
             <h2>{service.name}</h2>
             <p>{service.email}</p>
+            <button onClick={() => handleFlag(service.id, true)}>Flag up</button>
+            <button onClick={() => handleFlag(service.id, false)}>Flag down</button>
+            <p>Flag count: {flagCounts[service.id] || 0}</p>
           </Popup>
         </Marker>
   
@@ -204,6 +218,9 @@ function App() {
             <h2>{site.name}</h2>
             <p>{site.email}</p>
             <p>{site.description}</p>
+            <button onClick={() => handleFlag(site.id, true)}>Flag up</button>
+            <button onClick={() => handleFlag(site.id, false)}>Flag down</button>
+            <p>Flag count: {flagCounts[site.id] || 0}</p>
           </Popup>
         </Marker>
   
@@ -224,24 +241,36 @@ function App() {
           <Popup>
             <h2>{store.name}</h2>
             <p>{store.email}</p>
+            <button onClick={() => handleFlag(store.id, true)}>Flag up</button>
+            <button onClick={() => handleFlag(store.id, false)}>Flag down</button>
+            <p>Flag count: {flagCounts[store.id] || 0}</p>
           </Popup>
-
         </Marker>
-  
       );
       })}
         </MapContainer>
       </div>
       <div>
         <div>
-        <AddRestaurantForm addRestaurant={addRestaurant} />
-        <AddServiceForm addService = {addService}/>
-        <AddStoreForm addStore = {addStore} />
-        <AddSiteForm addSite = {addSite} />
+          <div>
+                <button onClick={() => toggleForm('newRestaurant')}>Add new Restaurant</button>
+                {formOpen === 'newRestaurant' && <AddRestaurantForm addRestaurant={addRestaurant} />}
+          </div>
+          <div>
+                <button onClick={() => toggleForm("newService")}>Add new Service</button>
+                {formOpen === "newService" && <AddServiceForm addService={addService} />}
+          </div>
+          <div>
+                <button onClick={() => toggleForm("newSite")}>Add new historical Landmark</button>
+                {formOpen === "newSite" && <AddSiteForm addSite={addSite} />}
+          </div>
+          <div>
+                <button onClick={() => toggleForm("newStore")}>Add new store</button>
+                {formOpen === "newStore" && <AddStoreForm addStore={addStore} />}
+          </div>
         </div>
         <h2>All Restaurant</h2>
         <RestaurantsList 
-        addRestaurant={addRestaurant}
         restaurantEntries={restaurantsList} />
       </div> 
       <div>
