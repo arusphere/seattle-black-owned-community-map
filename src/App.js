@@ -2,7 +2,7 @@ import {React, useState, useEffect } from "react";
 import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import './App.css';
-import { Icon } from "leaflet"
+
 
 import RestaurantsList from "./components/RestaurantsList";
 import ServicesList from "./components/ServicesList";
@@ -12,42 +12,43 @@ import AddRestaurantForm from "./components/NewRestaurantForm";
 import AddServiceForm from "./components/NewServiceForm";
 import AddStoreForm from "./components/NewStoreForm";
 import AddSiteForm from "./components/NewSiteForm";
-import EditRestaurantForm from "./components/EditRestaurantForm";
+import Icons from "./components/Icons";
 
 
 
-const serviceIcon = new Icon({
-  iconUrl: "/serviceicon.png",
-  iconSize: [25, 25],
-  iconAnchor: [12, 12],
-  popupAnchor: [0, -12],
-  className: "service-icon"
-});
+
+// const serviceIcon = new Icon({
+//   iconUrl: "/serviceicon.png",
+//   iconSize: [25, 25],
+//   iconAnchor: [12, 12],
+//   popupAnchor: [0, -12],
+//   className: "service-icon"
+// });
 
 
-const restaurantIcon = new Icon({
-  iconUrl: "/restaurantsicon.png",
-  iconSize: [25, 25],
-  iconAnchor: [12, 12],
-  popupAnchor: [0, -12],
-  className: "restaurant-icon"
-});
+// const restaurantIcon = new Icon({
+//   iconUrl: "/restaurantsicon.png",
+//   iconSize: [25, 25],
+//   iconAnchor: [12, 12],
+//   popupAnchor: [0, -12],
+//   className: "restaurant-icon"
+// });
 
-const storesIcon = new Icon({
-  iconUrl: "/storesicon.png",
-  iconSize: [25, 25],
-  iconAnchor: [12, 12],
-  popupAnchor: [0, -12],
-  className: "stores-icon"
-});
+// const storesIcon = new Icon({
+//   iconUrl: "/storesicon.png",
+//   iconSize: [25, 25],
+//   iconAnchor: [12, 12],
+//   popupAnchor: [0, -12],
+//   className: "stores-icon"
+// });
 
-const historicalsitesIcon = new Icon({
-  iconUrl: "/historicalsites.png",
-  iconSize: [25, 25],
-  iconAnchor: [12, 12],
-  popupAnchor: [0, -12],
-  className: "historicalsite-icon"
-});
+// const historicalsitesIcon = new Icon({
+//   iconUrl: "/historicalsites.png",
+//   iconSize: [25, 25],
+//   iconAnchor: [12, 12],
+//   popupAnchor: [0, -12],
+//   className: "historicalsite-icon"
+// });
 
 
 
@@ -71,26 +72,16 @@ function App() {
 
   const LocationURL = "https://sblackownedproxy.herokuapp.com/locations";
 
-  const fetchLocation = () => {
-    axios
-      .get(LocationURL)
-      .then(response => {
-        // Handle successful response
-        console.log(response.data);
-      })
-      .catch(error => {
-        // Handle error
-        console.error(error);
-      });
-  };
-
-
-
-
-
-
-
-
+const fetchLocation = () => {
+  axios
+    .get(LocationURL)
+    .then(response => {
+      console.log(response.data);
+    })
+    .catch(error => {
+      console.error(error);
+    });
+};
 
   const [flagCounts, setFlagCounts] = useState({});
 
@@ -164,7 +155,7 @@ function App() {
         <Marker
           key={restaurant.id}
           position={[restaurant.latitude, restaurant.longitude]}
-          icon={restaurantIcon }
+          icon={Icons.restaurantIcon }
           
         >
           <Popup>
@@ -189,7 +180,7 @@ function App() {
         <Marker
           key={service.id}
           position={[service.latitude, service.longitude]}
-          icon={serviceIcon}
+          icon={Icons.serviceIcon}
         >
           <Popup >
             <h2>{service.name}</h2>
@@ -212,7 +203,7 @@ function App() {
         <Marker
           key={site.id}
           position={[site.latitude, site.longitude]}
-          icon = {historicalsitesIcon}
+          icon = {Icons.historicalsitesIcon}
         >
           <Popup>
             <h2>{site.name}</h2>
@@ -235,7 +226,7 @@ function App() {
         <Marker
           key={store.id}
           position={[store.latitude, store.longitude]}
-          icon = {storesIcon}
+          icon = {Icons.storesIcon}
           
         >
           <Popup>
