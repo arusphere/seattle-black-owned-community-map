@@ -3,7 +3,6 @@ import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import './App.css';
 import { Icon } from "leaflet"
-import Location from "./components/Location"
 
 
 import RestaurantsList from "./components/RestaurantsList";
@@ -68,23 +67,14 @@ function App() {
       });
   };
 
-  const [lat, setLat] = useState("");
-  const [lon, setLon] = useState("");
-
-  const handleAddressChange = (event) => {
-    const address = event.target.value;
-    Location(address, setLat, setLon);
-  };
-
   const [flagCounts, setFlagCounts] = useState({});
-  // const [selectedItem, setSelectedItem] = useState(null);
 
 
   const [restaurantsList, setRestaurantsList] = useState([]);
   const restaurantURL = "https://seattleblackcommunitymap-proxy.herokuapp.com/restaurants";
   
   const [servicesList, setServiceList] = useState([]);
-  const serviceURL = "https://seattleblackcommunitymap-proxy.herokuapp.com/blackownedservices";
+  const serviceURL = "https://seattleblackcommunitymap-proxy.herokuapp.com/historicalsites";
 
   const [sitesList,setSitesList] = useState([]);
   const siteURL = "https://seattleblackcommunitymap-proxy.herokuapp.com/historicalsites";
@@ -259,10 +249,6 @@ function App() {
       </div>
       <div>
         <div>
-              <label>Enter an address:</label>
-              <input type="text" onChange={handleAddressChange} />
-              <p>Latitude: {lat}</p>
-              <p>Longitude: {lon}</p>
         <div>
                 <button onClick={() => toggleForm('newRestaurant')}>Add Restaurant/Shop</button>
                 {formOpen === 'newRestaurant' && <AddRestaurantForm addRestaurant={addRestaurant} />}

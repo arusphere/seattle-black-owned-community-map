@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import getLocation from "./Location";
-import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete';
+import Location from "./Location";
+
 
 function AddRestaurantForm(props) {
     const [address, setAddress] = useState("");
@@ -16,7 +16,19 @@ function AddRestaurantForm(props) {
     const [zip_code, setZipCode] = useState("");
     const [lat, setLat] = useState("");
     const [long, setLong] = useState("");
-    
+
+    const handleAddressChange = (event) => {
+        const address = event.target.value;
+        setAddress(address);
+        Location(address, setLat, setLong, (data) => {
+            if (data.address) {
+            setCity(data.address.city);
+            setState(data.address.state);
+            setZipCode(data.address.postcode);
+            }
+        });
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         const newRestaurant = {
@@ -49,14 +61,6 @@ function AddRestaurantForm(props) {
         setLat("");
         setLong("");
     };
-        // const handleAddressChange = (e) => {
-        //     const addressValue = e.target.value;
-        //     setAddress(addressValue);
-        //     if (addressValue.length >= 5) {
-        //     getLocation(addressValue, setLat, setLong);
-        //     }
-        // };
-
     return (
         
         <form onSubmit={handleSubmit}>
@@ -76,9 +80,9 @@ function AddRestaurantForm(props) {
             type="text"
             placeholder="Address"
             value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={handleAddressChange}
         />
-        <input
+        {/* <input
         type="text"
         placeholder="City"
         value={city}
@@ -101,7 +105,7 @@ function AddRestaurantForm(props) {
         placeholder="Zip Code"
         value={zip_code}
         onChange={(e) => setZipCode(e.target.value)}
-        />
+        /> */}
         <input
         type="text"
         placeholder="Cuisine/Shop Type"
@@ -129,15 +133,18 @@ function AddRestaurantForm(props) {
         <input
             type="text"
             placeholder="Latitude"
+            id="lat-input"
             value={lat}
             onChange={(e) => setLat(e.target.value)}
         />
-        <input
+            <input
             type="text"
             placeholder="Longitude"
+            id="long-input"
             value={long}
             onChange={(e) => setLong(e.target.value)}
         />
+
         <button type="submit">Add Restaurant</button>
         </form>
         );

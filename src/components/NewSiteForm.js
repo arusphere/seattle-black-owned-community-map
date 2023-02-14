@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Location from "./Location";
 
 function AddSiteForm(props) {
     const [name, setName] = useState("");
@@ -11,11 +12,23 @@ function AddSiteForm(props) {
     const [website, setWebsite] = useState("");
     const [lat, setLat] = useState("");
     const [long, setLong] = useState("");
+
+    const handleAddressChange = (event) => {
+        const address = event.target.value;
+        setAddress(address);
+        Location(address, setLat, setLong, (data) => {
+            if (data.address) {
+            setCity(data.address.city);
+            setState(data.address.state);
+            setZipCode(data.address.postcode);
+            }
+        });
+    };
     
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        const newStore = {
+        const newSite = {
         name,
         address,
         city,
@@ -27,7 +40,7 @@ function AddSiteForm(props) {
         website,
         zip_code,
         };
-        props.addStore(newStore);
+        props.addSite(newSite);
         setName("");
         setDescription("");
         setLat("");
@@ -59,7 +72,7 @@ function AddSiteForm(props) {
             type="text"
             placeholder="Address"
             value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={handleAddressChange}
         />
         <input
         type="text"
@@ -97,7 +110,7 @@ function AddSiteForm(props) {
             value={long}
             onChange={(e) => setLong(e.target.value)}
         />
-        <button type="submit">Add Store</button>
+        <button type="submit">Add Site</button>
         </form>
     );
     }

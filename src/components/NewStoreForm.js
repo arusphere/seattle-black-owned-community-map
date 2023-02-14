@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import getLocation from './Location'
+import React, { useState } from "react";
+import Location from './Location'
 
 function AddStoreForm(props) {
     const [name, setName] = useState("");
@@ -15,6 +15,18 @@ function AddStoreForm(props) {
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [website, setWebsite] = useState("");
+
+    const handleAddressChange = (event) => {
+        const address = event.target.value;
+        setAddress(address);
+        Location(address, setLat, setLong, (data) => {
+            if (data.address) {
+            setCity(data.address.city);
+            setState(data.address.state);
+            setZipCode(data.address.postcode);
+            }
+        });
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -74,7 +86,7 @@ function AddStoreForm(props) {
             type="text"
             placeholder="Address"
             value={address}
-            onChange={(e) => setAddress(e.target.value)}
+            onChange={handleAddressChange}
         />
         <input
             type="text"
