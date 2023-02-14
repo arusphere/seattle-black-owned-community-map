@@ -3,6 +3,7 @@ import axios from "axios";
 import { MapContainer, TileLayer, Marker, Popup} from 'react-leaflet';
 import './App.css';
 import { Icon } from "leaflet"
+import Location from "./components/Location"
 
 
 import RestaurantsList from "./components/RestaurantsList";
@@ -65,6 +66,14 @@ function App() {
       .catch(error => {
         console.log(error);
       });
+  };
+
+  const [lat, setLat] = useState("");
+  const [lon, setLon] = useState("");
+
+  const handleAddressChange = (event) => {
+    const address = event.target.value;
+    Location(address, setLat, setLon);
   };
 
   const [flagCounts, setFlagCounts] = useState({});
@@ -143,7 +152,8 @@ function App() {
   return (
     <div>
       <div>
-        <MapContainer center={[47.6, -122.3]} zoom={12} scrollWheelZoom={false}>
+        <MapContainer center={[47.6, -122.3]} zoom={10} scrollWheelZoom={false} doubleClickZoom
+        true>
           <TileLayer
             url="https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"
             attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
@@ -164,9 +174,9 @@ function App() {
           <Popup>
             <h2>{restaurant.name}</h2>
             <p>{restaurant.email}</p>
-            <button onClick={() => handleFlag(restaurant.id, true)}>Flag up</button>
-            <button onClick={() => handleFlag(restaurant.id, false)}>Flag down</button>
-            <p>Flag count: {flagCounts[restaurant.id] || 0}</p>
+            <button onClick={() => handleFlag(restaurant.id, true)}>➕ 🚩</button>
+            <button onClick={() => handleFlag(restaurant.id, false)}>➖ 🚩</button>
+            <p>Needs revision count: {flagCounts[restaurant.id] || 0}</p>
           </Popup>
 
         </Marker>
@@ -189,9 +199,9 @@ function App() {
           <Popup >
             <h2>{service.name}</h2>
             <p>{service.email}</p>
-            <button onClick={() => handleFlag(service.id, true)}>Flag up</button>
-            <button onClick={() => handleFlag(service.id, false)}>Flag down</button>
-            <p>Flag count: {flagCounts[service.id] || 0}</p>
+            <button onClick={() => handleFlag(service.id, true)}>➕ 🚩</button>
+            <button onClick={() => handleFlag(service.id, false)}>➖ 🚩</button>
+            <p>Needs revision count : {flagCounts[service.id] || 0}</p>
           </Popup>
         </Marker>
   
@@ -213,9 +223,9 @@ function App() {
             <h2>{site.name}</h2>
             <p>{site.email}</p>
             <p>{site.description}</p>
-            <button onClick={() => handleFlag(site.id, true)}>Flag up</button>
-            <button onClick={() => handleFlag(site.id, false)}>Flag down</button>
-            <p>Flag count: {flagCounts[site.id] || 0}</p>
+            <button onClick={() => handleFlag(site.id, true)}>➕ 🚩</button>
+            <button onClick={() => handleFlag(site.id, false)}>➖ 🚩</button>
+            <p>Needs revision count: {flagCounts[site.id] || 0}</p>
           </Popup>
         </Marker>
   
@@ -236,9 +246,9 @@ function App() {
           <Popup>
             <h2>{store.name}</h2>
             <p>{store.email}</p>
-            <button onClick={() => handleFlag(store.id, true)}>Flag up</button>
-            <button onClick={() => handleFlag(store.id, false)}>Flag down</button>
-            <p>Flag count: {flagCounts[store.id] || 0}</p>
+            <button onClick={() => handleFlag(store.id, true)}>➕ 🚩</button>
+            <button onClick={() => handleFlag(store.id, false)}>➖ 🚩</button>
+            <p>Needs revision count: {flagCounts[store.id] || 0}</p>
           </Popup>
 
         </Marker>
@@ -249,16 +259,20 @@ function App() {
       </div>
       <div>
         <div>
+              <label>Enter an address:</label>
+              <input type="text" onChange={handleAddressChange} />
+              <p>Latitude: {lat}</p>
+              <p>Longitude: {lon}</p>
         <div>
-                <button onClick={() => toggleForm('newRestaurant')}>Add new Restaurant</button>
+                <button onClick={() => toggleForm('newRestaurant')}>Add Restaurant/Shop</button>
                 {formOpen === 'newRestaurant' && <AddRestaurantForm addRestaurant={addRestaurant} />}
           </div>
           <div>
-                <button onClick={() => toggleForm("newService")}>Add new Service</button>
+                <button onClick={() => toggleForm("newService")}>Add Service</button>
                 {formOpen === "newService" && <AddServiceForm addService={addService} />}
           </div>
           <div>
-                <button onClick={() => toggleForm("newSite")}>Add new historical Landmark</button>
+                <button onClick={() => toggleForm("newSite")}>Add historical Landmark</button>
                 {formOpen === "newSite" && <AddSiteForm addSite={addSite} />}
           </div>
           <div>

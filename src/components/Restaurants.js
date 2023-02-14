@@ -21,7 +21,7 @@ const Restaurant = (props) => {
                 <li>Name : {name}</li>
                 <li>Description : {description} </li>
                 <li>📧 : {email} </li>
-                <li>📞: {phone_number} </li>
+                <li>📲: {phone_number} </li>
                 <li>Website : {website} </li>
                 <ul>
                     <li>Address : {address} </li>

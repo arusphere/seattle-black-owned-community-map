@@ -21,7 +21,7 @@ const Stores = (props) => {
                 <li>Store type : {store_type}</li>
                 <li> Store name : {name}</li>
                 <li>Description : {description}</li>
-                <li>📞 : {phone}</li>
+                <li>📲 : {phone}</li>
                 <li>📧  : {email}</li>
                 <li>Website : {website};</li>
                 <ul>

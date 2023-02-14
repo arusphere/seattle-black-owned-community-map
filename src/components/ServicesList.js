@@ -3,10 +3,10 @@ import PropTypes from "prop-types";
 import Services from "./Services";
 
 const ServicesList = (props) => {
-    const servicesComponents = props.servicesEntries.map((serviceEntry) =>{
+    const servicesComponents = props.servicesEntries.map((serviceEntry,index) =>{
         
         return (
-            <li key ={serviceEntry.id}>
+            <li key ={index}>
                 <Services
                             service_id = {serviceEntry.id}
                             address = {serviceEntry.address}

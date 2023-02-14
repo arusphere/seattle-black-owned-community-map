@@ -2,23 +2,40 @@ import React, { useState } from "react";
 
 function AddServiceForm(props) {
     const [name, setName] = useState("");
+    const [service_type, setServiceType] = useState("");
     const [description, setDescription] = useState("");
+    const [address, setAddress] = useState("");
+    const [city, setCity] = useState("");
+    const [state, setState] = useState("");
+    const [county, setCounty] = useState("");
+    const [zip_code, setZipCode] = useState("");
     const [lat, setLat] = useState("");
     const [long, setLong] = useState("");
     const [email, setEmail] = useState("");
     const [phone, setPhone] = useState("");
     const [website, setWebsite] = useState("");
+    const [non_profit, setNonProfit] = useState("")
+    const [public_business,setPublicBusiness] = useState("")
+
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const newService = {
         name,
+        service_type,
         description,
+        address,
+        city,
+        state,
+        county,
+        zip_code,
         latitude: lat,
         longitude: long,
         email,
         phone,
         website,
+        non_profit,
+        public_business
         };
         props.addService(newService);
         setName("");
@@ -39,10 +56,46 @@ function AddServiceForm(props) {
             onChange={(e) => setName(e.target.value)}
         />
         <input
+        type="text"
+        placeholder="Store Type"
+        value={service_type}
+        onChange={(e) => setServiceType(e.target.value)}
+        />
+        <input
             type="text"
             placeholder="Description"
             value={description}
             onChange={(e) => setDescription(e.target.value)}
+        />
+        <input
+            type="text"
+            placeholder="Address"
+            value={address}
+            onChange={(e) => setAddress(e.target.value)}
+        />
+        <input
+            type="text"
+            placeholder="City"
+            value={city}
+            onChange={(e) => setCity(e.target.value)}
+            />
+            <input
+            type="text"
+            placeholder="Zip Code"
+            value={zip_code}
+            onChange={(e) => setZipCode(e.target.value)}
+            />
+            <input
+            type="text"
+            placeholder="County"
+            value={county}
+            onChange={(e) => setCounty(e.target.value)}
+        />
+        <input
+            type="text"
+            placeholder="State"
+            value={state}
+            onChange={(e) => setState(e.target.value)}
         />
         <input
             type="text"
@@ -74,7 +127,19 @@ function AddServiceForm(props) {
             value={website}
             onChange={(e) => setWebsite(e.target.value)}
         />
-        <button type="submit">Add Service</button>
+        <input
+            type="text"
+            placeholder="Non_Profit(T/F)"
+            value={non_profit}
+            onChange={(e) => setNonProfit(e.target.value)}
+        />
+        <input
+            type="text"
+            placeholder="Public Business(T/F)"
+            value={public_business}
+            onChange={(e) => setPublicBusiness(e.target.value)}
+        />
+        <button type="submit">Add Store</button>
         </form>
     );
     }

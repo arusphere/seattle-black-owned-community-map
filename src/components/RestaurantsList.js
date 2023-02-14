@@ -6,9 +6,9 @@ const RestaurantsList = (props) => {
 // const boardEntries = props.restaurantEntries;
 console.log(props);
 
-const restaurantComponents = props.restaurantEntries.map((restaurantEntry) => {
+const restaurantComponents = props.restaurantEntries.map((restaurantEntry,index) => {
     return (
-    <li key={restaurantEntry.id}>
+    <li key={index}>
         <Restaurant
             restaurant_id = {restaurantEntry.id}
             address = {restaurantEntry.address}

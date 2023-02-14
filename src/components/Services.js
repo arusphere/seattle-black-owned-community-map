@@ -22,7 +22,7 @@ const Services = (props) => {
                 <li>Name : {name}</li>
                 <li>Description : {description}</li>
                 <li> 📧 : {email}</li>
-                <li> 📞 : {phone}</li>
+                <li> 📲: {phone}</li>
                 <li> website : {website};</li>
                 <li>public business: {public_business}</li>
                 <li>Non profit : {non_profit}</li>

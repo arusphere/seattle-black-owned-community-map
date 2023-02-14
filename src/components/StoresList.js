@@ -3,9 +3,9 @@ import Stores from "./Stores"
 
 
 const StoresList = (props) => {
-    const storesComponents = props.storesEntries.map((storesEntry)=>{
+    const storesComponents = props.storesEntries.map((storesEntry,index)=>{
         return (
-            <li key={storesEntry.id}>
+            <li key={index}>
                 <Stores
                     sites_id = {storesEntry.id}
                     address = {storesEntry.address}
