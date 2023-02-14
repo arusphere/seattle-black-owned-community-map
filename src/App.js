@@ -24,7 +24,6 @@ const serviceIcon = new Icon({
   className: "service-icon"
 });
 
-
 const restaurantIcon = new Icon({
   iconUrl: "/restaurantsicon.png",
   iconSize: [25, 25],
@@ -51,10 +50,9 @@ const historicalsitesIcon = new Icon({
 
 
 function App() {
-  const [formOpen, setFormOpen] = useState(null);
-  const toggleForm = (formType) => {
-    setFormOpen(formType);
-  };
+  const [loading, setLoading] = useState(true);
+
+  const [flagCounts, setFlagCounts] = useState({});
 
   const fetchData = (url, setData) => {
     axios
@@ -67,14 +65,11 @@ function App() {
       });
   };
 
-  const [flagCounts, setFlagCounts] = useState({});
-
-
   const [restaurantsList, setRestaurantsList] = useState([]);
   const restaurantURL = "https://seattleblackcommunitymap-proxy.herokuapp.com/restaurants";
   
   const [servicesList, setServiceList] = useState([]);
-  const serviceURL = "https://seattleblackcommunitymap-proxy.herokuapp.com/historicalsites";
+  const serviceURL = "https://seattleblackcommunitymap-proxy.herokuapp.com/blackownedservices";
 
   const [sitesList,setSitesList] = useState([]);
   const siteURL = "https://seattleblackcommunitymap-proxy.herokuapp.com/historicalsites";
@@ -82,7 +77,7 @@ function App() {
   const [storesList,setStoresList] = useState([]);
   const storeURL = "https://seattleblackcommunitymap-proxy.herokuapp.com/blackownedstores";
 
-  
+
   const addRestaurant = (newRestaurant) => {
     axios
       .post(restaurantURL, newRestaurant)
@@ -93,6 +88,7 @@ function App() {
         console.log(error);
       });
   };
+
   const addService = (newService) => {
     axios
       .post(serviceURL, newService)
@@ -103,6 +99,7 @@ function App() {
         console.log(error);
       });
   };
+
   const addStore = (newStore) => {
     axios
       .post(storeURL, newStore)
@@ -125,12 +122,8 @@ function App() {
       });
   };
 
-  useEffect(() => {
-    fetchData(restaurantURL, setRestaurantsList);
-    fetchData(serviceURL, setServiceList);
-    fetchData(siteURL, setSitesList);
-    fetchData(storeURL, setStoresList);
-  }, []);
+
+
 
   const handleFlag = (id, increment) => {
     if (increment) {
@@ -139,8 +132,45 @@ function App() {
       setFlagCounts({ ...flagCounts, [id]: flagCounts[id] ? flagCounts[id] - 1 : 0 });
     }
   };
+  const [formOpen, setFormOpen] = useState(null);
+
+  const toggleForm = (formName) => {
+    if (formOpen === formName) {
+      setFormOpen(null);
+    } else {
+      setFormOpen(formName);
+    }
+  };
+
+  useEffect(() => {
+    Promise.all([
+      axios.get(restaurantURL),
+      axios.get(serviceURL),
+      axios.get(siteURL),
+      axios.get(storeURL),
+    ])
+      .then(responses => {
+        setRestaurantsList(responses[0].data);
+        setServiceList(responses[1].data);
+        setSitesList(responses[2].data);
+        setStoresList(responses[3].data);
+        setLoading(false);  // set loading to false when all fetch requests have completed
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
   return (
     <div>
+      <div id="header">
+        <div className="container">
+          <nav>
+
+          </nav>
+        </div>
+
+      </div>
       <div>
         <MapContainer center={[47.6, -122.3]} zoom={10} scrollWheelZoom={false} doubleClickZoom
         true>
@@ -164,6 +194,13 @@ function App() {
           <Popup>
             <h2>{restaurant.name}</h2>
             <p>{restaurant.email}</p>
+            <div>
+                <li>{restaurant.phone}</li>
+                <li>{restaurant.email}</li>
+                <li>{restaurant.website};</li>
+                <li>{restaurant.address}</li>
+              </div>
+              <br></br>
             <button onClick={() => handleFlag(restaurant.id, true)}>➕ 🚩</button>
             <button onClick={() => handleFlag(restaurant.id, false)}>➖ 🚩</button>
             <p>Needs revision count: {flagCounts[restaurant.id] || 0}</p>
@@ -189,6 +226,13 @@ function App() {
           <Popup >
             <h2>{service.name}</h2>
             <p>{service.email}</p>
+            <div>
+                <li>{service.phone}</li>
+                <li>{service.email}</li>
+                <li>{service.webservice};</li>
+                <li>{service.address}</li>
+              </div>
+              <br></br>
             <button onClick={() => handleFlag(service.id, true)}>➕ 🚩</button>
             <button onClick={() => handleFlag(service.id, false)}>➖ 🚩</button>
             <p>Needs revision count : {flagCounts[service.id] || 0}</p>
@@ -213,6 +257,13 @@ function App() {
             <h2>{site.name}</h2>
             <p>{site.email}</p>
             <p>{site.description}</p>
+            <div>
+                <li>{site.phone}</li>
+                <li>{site.email}</li>
+                <li>{site.website};</li>
+                <li>{site.address}</li>
+              </div>
+              <br></br>
             <button onClick={() => handleFlag(site.id, true)}>➕ 🚩</button>
             <button onClick={() => handleFlag(site.id, false)}>➖ 🚩</button>
             <p>Needs revision count: {flagCounts[site.id] || 0}</p>
@@ -235,10 +286,21 @@ function App() {
         >
           <Popup>
             <h2>{store.name}</h2>
-            <p>{store.email}</p>
-            <button onClick={() => handleFlag(store.id, true)}>➕ 🚩</button>
-            <button onClick={() => handleFlag(store.id, false)}>➖ 🚩</button>
-            <p>Needs revision count: {flagCounts[store.id] || 0}</p>
+            <p>{store.description}</p>
+            <p>{store.store_type}</p>
+            <div>
+                <li>{store.phone}</li>
+                <li>{store.email}</li>
+                <li>{store.website};</li>
+                <li>{store.address} </li>
+                <br></br>
+                </div>
+            <div>
+              <button onClick={() => handleFlag(store.id, true)}>➕ 🚩</button>
+              <button onClick={() => handleFlag(store.id, false)}>➖ 🚩</button>
+              <p>Needs revision count: {flagCounts[store.id] || 0}</p>
+            </div>
+            
           </Popup>
 
         </Marker>

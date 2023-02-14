@@ -57,6 +57,13 @@ function AddServiceForm(props) {
         setEmail("");
         setPhone("");
         setWebsite("");
+        setAddress("");
+        setCity("");
+        setNonProfit("")
+        setPublicBusiness("");
+        setServiceType("");
+        setCounty("")
+        setZipCode("")
     };
 
     return (
@@ -69,7 +76,7 @@ function AddServiceForm(props) {
         />
         <input
         type="text"
-        placeholder="Store Type"
+        placeholder="Service Type"
         value={service_type}
         onChange={(e) => setServiceType(e.target.value)}
         />

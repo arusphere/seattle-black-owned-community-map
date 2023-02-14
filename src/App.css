@@ -10,7 +10,7 @@
   margin-left: -115px;
   
   border-radius: 50% 50% 50% 0;
-  background-color:yellowgreen;
+  background-color:orange;
   width: 20px;
   height: 20px;
   transform: rotate(-45deg);
@@ -91,7 +91,7 @@
   transform: rotate(-45deg);
 }
 
-.stores-icon::after {
+.historicalsite::after {
   position: absolute;
   content: '';
   width: 10px;
@@ -101,4 +101,14 @@
   left: 50%;
   margin-left: -5px;
   margin-top: -5px;
+}
+
+body {
+  background-color: #080808;
+  color:#fff;
+}
+
+#header{
+  width: 100px;
+  height: 100vh;
 }
