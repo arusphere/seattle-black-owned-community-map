@@ -1,12 +1,14 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Services from "./Services";
+import "./ServicesList.css";
 
 const ServicesList = (props) => {
     const servicesComponents = props.servicesEntries.map((serviceEntry,index) =>{
         
         return (
-            <li key ={index}>
+            <div className="restaurant-list">
+                <li key ={index}>
                 <Services
                             service_id = {serviceEntry.id}
                             address = {serviceEntry.address}
@@ -27,11 +29,13 @@ const ServicesList = (props) => {
 
                 />
             </li>
+            </div>
+            
         );
     });
     return (
         <section>
-            <ul>{servicesComponents}</ul>
+            <ul className="restaurant-list">{servicesComponents}</ul>
         </section>
     );
 };

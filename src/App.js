@@ -54,16 +54,7 @@ function App() {
 
   const [flagCounts, setFlagCounts] = useState({});
 
-  const fetchData = (url, setData) => {
-    axios
-      .get(url)
-      .then(res => {
-        setData(res.data);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-  };
+
 
   const [restaurantsList, setRestaurantsList] = useState([]);
   const restaurantURL = "https://seattleblackcommunitymap-proxy.herokuapp.com/restaurants";
@@ -163,22 +154,27 @@ function App() {
 
   return (
     <div>
-      <div id="header">
-        <div className="container">
-          <nav>
-
+        <header className="container">
+          <div>
+          <nav className="nav-bar">
+              <ul id="nav-links">
+                <li><a href ="#/Users/ariamyonas/Developer/projects/seattle-black-owned-community-map/public/index.html"> Home</a></li>
+                <li><a href="#social-icons">Contact</a></li>
+              </ul>
           </nav>
+          <div className="header-text">
+            <h1> Seattle's <span>Black-Owned </span><br></br> Community Hub</h1>
+            <p>Services,Businesses & Organizations</p>
+          </div>
         </div>
-
-      </div>
-      <div>
+      </header>
+      <div className="map-section">
         <MapContainer center={[47.6, -122.3]} zoom={10} scrollWheelZoom={false} doubleClickZoom
         true>
           <TileLayer
             url="https://stamen-tiles.a.ssl.fastly.net/toner/{z}/{x}/{y}.png"
             attribution='Map tiles by <a href="http://stamen.com">Stamen Design</a>, under <a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a>. Data by <a href="http://openstreetmap.org">OpenStreetMap</a>, under <a href="http://www.openstreetmap.org/copyright">ODbL</a>.'
           />
-
           {/* RESTAURANTS */}
           {restaurantsList.map(restaurant => {
   if (!restaurant.latitude || !restaurant.longitude) {
@@ -223,13 +219,13 @@ function App() {
           position={[service.latitude, service.longitude]}
           icon={serviceIcon}
         >
-          <Popup >
+          <Popup>
             <h2>{service.name}</h2>
             <p>{service.email}</p>
             <div>
                 <li>{service.phone}</li>
                 <li>{service.email}</li>
-                <li>{service.webservice};</li>
+                <li>{service.website};</li>
                 <li>{service.address}</li>
               </div>
               <br></br>
@@ -284,7 +280,7 @@ function App() {
           icon = {storesIcon}
           
         >
-          <Popup>
+          <Popup >
             <h2>{store.name}</h2>
             <p>{store.description}</p>
             <p>{store.store_type}</p>
@@ -308,46 +304,70 @@ function App() {
       );
       })}
         </MapContainer>
-      </div>
-      <div>
+      <div className="add-marker-forms ">
+          <div>
+                  <button onClick={() => toggleForm('newRestaurant')}>Add Restaurant/Shop</button>
+                  {formOpen === 'newRestaurant' && <AddRestaurantForm addRestaurant={addRestaurant} />}
+            </div>
+            <div>
+                  <button onClick={() => toggleForm("newService")}>Add Service</button>
+                  {formOpen === "newService" && <AddServiceForm addService={addService} />}
+            </div>
+            <div>
+                  <button onClick={() => toggleForm("newSite")}>Add historical Landmark</button>
+                  {formOpen === "newSite" && <AddSiteForm addSite={addSite} />}
+            </div>
+            <div>
+                  <button onClick={() => toggleForm("newStore")}>Submit new store</button>
+                  {formOpen === "newStore" && <AddStoreForm addStore={addStore} />}
+            </div>
+            </div>
         <div>
-        <div>
-                <button onClick={() => toggleForm('newRestaurant')}>Add Restaurant/Shop</button>
-                {formOpen === 'newRestaurant' && <AddRestaurantForm addRestaurant={addRestaurant} />}
-          </div>
-          <div>
-                <button onClick={() => toggleForm("newService")}>Add Service</button>
-                {formOpen === "newService" && <AddServiceForm addService={addService} />}
-          </div>
-          <div>
-                <button onClick={() => toggleForm("newSite")}>Add historical Landmark</button>
-                {formOpen === "newSite" && <AddSiteForm addSite={addSite} />}
-          </div>
-          <div>
-                <button onClick={() => toggleForm("newStore")}>Add new store</button>
-                {formOpen === "newStore" && <AddStoreForm addStore={addStore} />}
-          </div>
-        </div>
-        <h2>All Restaurant</h2>
-        <RestaurantsList 
-        restaurantEntries={restaurantsList} />
-      </div> 
-      <div>
-      <h2>All Services</h2>
-      <ServicesList
-        servicesEntries = {servicesList} />
-      </div>
-      <div>
-      <h2>All Sites</h2>
-      <SitesList
-        sitesEntries = {sitesList} />
-      </div>
-      <div>
-      <h2>All Stores</h2>
-      <StoresList
-        storesEntries = {storesList} />
-      </div>
-    </div>
+        
+        {/* --------------------Overview----------------- */}
+                  <h1 className="sub-title"> Listed Overview Of All Places</h1>
+                  <div className="grid-container">
+                  <div className='grid-item'>
+                
+                  <label htmlFor="restaurants-list" className="tab-links">All black owned Restaurants</label>
+                    <div className="overview-list"> 
+                    <RestaurantsList restaurantEntries={restaurantsList} />
+                    </div>
+
+                    <label htmlFor="services-list" className="tab-links">All black owned Services</label>
+                    <div className="overview-list"> 
+                    <ServicesList servicesEntries={servicesList} />
+                    </div>
+
+                    </div>
+                    <div>
+                  <div className="tab-titles">
+                    <div className="grid-item">
+                    <label htmlFor="sites-list" className="tab-links">All historical Sites</label>
+                        <div className="overview-list"> 
+                        <SitesList sitesEntries={sitesList} />
+                        </div>
+                        <label htmlFor="stores-list" className="tab-links">All blackowned Stores</label>
+                        <div className="overview-list"> 
+                        <StoresList storesEntries={storesList} />
+                        </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+              
+                </div>
+              </div>
+              <footer>
+  <div id="social-icons">
+    <li><a href = 'https://github.com/arusphere'>GitHub</a></li>
+          <lil><a href = 'https://www.linkedin.com/in/ariam-y-5a8ab4134/'>LinkedIn</a></lil>
+          <lil><a href = 'https://mail.google.com/mail/u/0/#inbox'>Email</a></lil> </div>
+</footer>
+            </div>
+  
+
+    
   );
 }
 

@@ -1,0 +1,8 @@
+ul {
+    flex-wrap: wrap;
+    font-size: 18px;
+    flex-direction: column;
+    display: flex;
+    align-items: center;
+}
+

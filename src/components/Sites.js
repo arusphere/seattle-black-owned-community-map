@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types'
+import "./Sites.css"
 
 const Sites = (props) => {
     const address = props.address;
@@ -12,8 +13,8 @@ const Sites = (props) => {
     const zip_code = props.zip_code;
     
     return (
-        <div>
-            <ul>
+        <div className = 'sites-item'>
+            <ul className='sites-name-text'>
                 <li> Name : {name}</li>
                 <li>Description : {description}</li>
                 <li> Website : {website} </li>     

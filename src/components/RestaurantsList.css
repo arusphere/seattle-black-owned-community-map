@@ -1,0 +1,18 @@
+.restaurant-list {
+	border: 2px  #b54769;
+    list-style: None;
+	font-size: large;
+	width: 400x;
+	height: 400px;
+	padding-left:0;
+	margin:0;
+	overflow:scroll;
+	background-color: black;
+	font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+/* 
+li {
+    list-style: None;
+	padding-left:0;
+} */

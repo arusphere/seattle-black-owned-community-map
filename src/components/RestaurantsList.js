@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import Restaurant from "./Restaurants";
+import "./RestaurantsList.css"
 
 const RestaurantsList = (props) => {
 // const boardEntries = props.restaurantEntries;
@@ -8,7 +9,7 @@ console.log(props);
 
 const restaurantComponents = props.restaurantEntries.map((restaurantEntry,index) => {
     return (
-    <li key={index}>
+        <li key={index} lassName="restaurant-list">
         <Restaurant
             restaurant_id = {restaurantEntry.id}
             address = {restaurantEntry.address}
@@ -31,7 +32,7 @@ const restaurantComponents = props.restaurantEntries.map((restaurantEntry,index)
 
 return (
     <section>
-    <ul>{restaurantComponents}</ul>
+    <ul className="restaurant-list">{restaurantComponents}</ul>
     </section>
 );
 };

@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types'
 
+
 const Restaurant = (props) => {
     const address = props.address;
     const city = props.city;
@@ -15,8 +16,8 @@ const Restaurant = (props) => {
     const zip_code = props.zip_code;
 
     return (
-        <div>
-            <ul>
+        <div className='restaurant-item' >
+            <ul className='restaurant-name-text'>
                 <li>Cuisine/Shop type : {cuisine_shop_type} </li>
                 <li>Name : {name}</li>
                 <li>Description : {description} </li>

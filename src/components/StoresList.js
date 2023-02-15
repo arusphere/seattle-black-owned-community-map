@@ -5,7 +5,7 @@ import Stores from "./Stores"
 const StoresList = (props) => {
     const storesComponents = props.storesEntries.map((storesEntry,index)=>{
         return (
-            <li key={index}>
+            <li key={index} className="restaurant-list">
                 <Stores
                     sites_id = {storesEntry.id}
                     address = {storesEntry.address}
@@ -26,7 +26,7 @@ const StoresList = (props) => {
     });
     return (
         <section>
-            <ul>{storesComponents}</ul>
+            <ul className="restaurant-list">{storesComponents}</ul>
         </section>
     )
 }

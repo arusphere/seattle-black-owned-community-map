@@ -2,10 +2,11 @@ import React from "react";
 import Sites from "./Sites";
 
 
+
 const SitesList = (props) => {
     const sitesComponents = props.sitesEntries.map((sitesEntry,index)=>{
         return (
-            <li key={index}>
+            <li key={index} className="restaurant-list">
                 <Sites
                     sites_id = {sitesEntry.id}
                     address = {sitesEntry.address}
@@ -24,9 +25,9 @@ const SitesList = (props) => {
     });
     return (
         <section>
-            <ul>{sitesComponents}</ul>
+            <ul className="restaurant-list">{sitesComponents} </ul>
         </section>
-    )
-}
+    );
+};
 
 export default SitesList;
