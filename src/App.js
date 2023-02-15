@@ -318,7 +318,7 @@ function App() {
                   {formOpen === "newSite" && <AddSiteForm addSite={addSite} />}
             </div>
             <div>
-                  <button onClick={() => toggleForm("newStore")}>Submit new store</button>
+                  <button onClick={() => toggleForm("newStore")}>Add new Store</button>
                   {formOpen === "newStore" && <AddStoreForm addStore={addStore} />}
             </div>
             </div>
